@@ -1,0 +1,258 @@
+[
+  {
+    "id": "US-001",
+    "title": "Project Setup & Design System Foundation",
+    "description": "Initialize Next.js 14+ project with App Router, configure Tailwind CSS with the full design token system from the PRD (colors, typography, spacing, shadows, border radius), set up TypeScript interfaces for all data models (Project, BlogPost, Author, TechItem, Experience, Skill, ContactFormData), configure next/font with Space Grotesk/Inter/JetBrains Mono, and set up the base CSS variables and global styles. This establishes the complete design foundation that all other stories depend on.",
+    "acceptanceCriteria": [
+      "Next.js 14+ project boots with `npm run dev` without errors",
+      "Tailwind config extends with all color tokens (background, primary, accent, text, border, semantic colors)",
+      "All TypeScript interfaces match PRD data models exactly",
+      "Font configuration uses next/font/google with Space Grotesk, Inter, JetBrains Mono",
+      "CSS variables are defined for all design tokens in globals.css",
+      "TypeScript types pass strict typecheck with no errors",
+      "Tests for design token exports pass"
+    ],
+    "depends_on": [],
+    "screens": []
+  },
+  {
+    "id": "US-002",
+    "title": "Core UI Component Library",
+    "description": "Install and configure shadcn/ui components (Button, Card, Badge, Input, Textarea, Label, Separator, Skeleton, Toast, Dialog, DropdownMenu, Accordion, Avatar, ScrollArea, Sheet, Tabs, Command). Create a component variant system following the PRD design tokens. Implement Framer Motion animation variants (fadeUpVariants, scaleVariants, pageVariants, staggerContainer) and micro-interaction configs. Build the Button component with all variants (primary, secondary, ghost, destructive) and all sizes (sm, md, lg, icon). Build Card component with interactive variant and hover states. Create Badge component with all variants. Export a motionWrapper for spring animations.",
+    "acceptanceCriteria": [
+      "All shadcn/ui components render correctly with dark theme",
+      "Button component has primary/secondary/ghost/destructive variants with hover/active/disabled/loading states",
+      "Card component has default/interactive/featured variants with hover effects matching PRD",
+      "Badge component has all 7 variants (default, primary, secondary, accent, success, warning, error)",
+      "Framer Motion variants (fadeUpVariants, scaleVariants, pageVariants, staggerContainer) are exported and work",
+      "Skeleton component has pulse/wave animations",
+      "Typecheck passes with no errors",
+      "Tests for core components render pass"
+    ],
+    "depends_on": ["US-001"],
+    "screens": []
+  },
+  {
+    "id": "US-003",
+    "title": "Global Layout Components — Header & Footer",
+    "description": "Build the global Header component with fixed positioning, backdrop blur, logo (gradient text linking to /), desktop navigation links (Ana Sayfa, Projeler, Blog, Hakkında, İletişim), and social icons (right side). Implement scroll-triggered border-bottom. Build mobile hamburger menu that triggers full-screen overlay with vertical nav links and social icons at bottom. Build Footer with 4-column layout: about snippet, quick links (terminal-style // quick_links header), social icons, and copyright. Both must use the PRD design tokens and support all responsive breakpoints.",
+    "acceptanceCriteria": [
+      "Header renders with logo, nav links, and social icons on desktop",
+      "Header becomes hamburger menu with full-screen overlay on mobile",
+      "Mobile menu animates in with slide transition and closes on nav link click",
+      "Footer renders 4-column layout on desktop, stacked on mobile",
+      "Terminal-style section headers (// quick_links) render correctly in footer",
+      "Active nav link shows text-primary with underline",
+      "Hover states on nav links and social icons match PRD micro-interactions",
+      "Typecheck passes with no errors",
+      "Tests for Header and Footer render pass"
+    ],
+    "depends_on": ["US-001", "US-002"],
+    "screens": ["SCR-001", "SCR-002", "SCR-003", "SCR-004", "SCR-005", "SCR-006", "SCR-007"]
+  },
+  {
+    "id": "US-004",
+    "title": "Status Indicator & Cursor Glow Components",
+    "description": "Build the StatusIndicator component with online/offline/busy/away states, ping/pulse/no-animation options, and sm/md/lg sizes. Build the CursorGlowEffect component — a 300px radial gradient that follows the cursor, using Framer Motion useSpring with lerp factor 0.1, primary color at 15% opacity, screen blend mode, disabled on mobile/touch devices. Build the Toast notification system with variants (default, success, error, warning, info), positioned bottom-right (desktop) / bottom-center (mobile), max 3 visible, slide-in animation.",
+    "acceptanceCriteria": [
+      "StatusIndicator renders with correct colors (success/error/warning/muted) and optional ping/pulse animations",
+      "CursorGlowEffect follows cursor smoothly with useSpring interpolation",
+      "CursorGlowEffect is disabled on mobile (touch devices detected via window.matchMedia)",
+      "Toast system shows up to 3 notifications, auto-dismisses after 5000ms",
+      "Toast variants have correct colors and icons per PRD",
+      "Typecheck passes with no errors",
+      "Tests for StatusIndicator and Toast pass"
+    ],
+    "depends_on": ["US-001", "US-002"],
+    "screens": []
+  },
+  {
+    "id": "US-005",
+    "title": "Ana Sayfa (Homepage)",
+    "description": "Build the full Ana Sayfa page (/) according to the PRD. Hero section: terminal-style greeting '> Merhaba, ben Hikmet_' in monospace, animated typing effect cycling through roles ('Full-Stack Developer', 'UI/UX Designer', 'Problem Solver'), gradient text heading, subheading (max-width 600px), CTA buttons ('Hakkımda Bilgi Al' primary, 'Projeleri Gör' secondary), availability status badge with ping animation, social icons (LinkedIn, GitHub, Twitter/X) with hover scale, scroll indicator (bouncing chevron). Featured Projects section: '// featured_projects' terminal header, 3-column responsive grid (max 6 projects), hover lift effect. Recent Writing section: '// recent_writing' header, 3-column grid (max 3 posts). CTA section: gradient border, centered text + 'İletişime Geç' button. Background: subtle gradient mesh + scanlines overlay (opacity 0.03). All scroll animations use fade-up with stagger.",
+    "acceptanceCriteria": [
+      "Hero typing animation cycles through all three roles correctly",
+      "Gradient text uses bg-gradient-to-r from-primary to-accent bg-clip-text",
+      "CTA buttons render in correct variant and link to correct routes",
+      "Status badge shows with green ping animation",
+      "Featured projects grid is responsive (3/2/1 columns)",
+      "Card hover effect matches PRD (translateY(-4px), shadow-lg, border-primary)",
+      "CTA section has gradient border effect",
+      "All scroll-reveal animations trigger with proper stagger",
+      "Typecheck passes with no errors",
+      "Tests for homepage render pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003"],
+    "screens": ["Ana-Sayfa"]
+  },
+  {
+    "id": "US-006",
+    "title": "Projeler Listesi Page",
+    "description": "Build the Projeler page (/projects) with page header (title + description), sticky filter bar with category buttons (Tümü, Web, Mobil, Açık Kaynak, Freelance) with active state styling, search-triggering Command palette (Cmd+K), and responsive project grid. ProjectCard component: thumbnail (16:9 aspect), title, short description (2 lines max, truncated), tech stack pills (bg-background-subtle, rounded-full), GitHub/Demo links with hover effects. Card hover: border-primary, shadow-glow-primary, translateY(-4px). Implement loading skeleton (6 cards with shimmer), empty state (illustration + 'Filtreleme ile eşleşen proje bulunamadı'), and error state (error message + retry button). Grid: 3-column desktop, 2-column tablet, 1-column mobile.",
+    "acceptanceCriteria": [
+      "Filter bar is sticky after header scroll with border-bottom",
+      "Active filter shows bg-primary with white text",
+      "ProjectCard renders thumbnail, title, description (2 lines max), tech pills",
+      "Card hover shows border-primary, glow, and lift effect",
+      "Tech pills use bg-background-subtle with rounded-full",
+      "Skeleton loaders show 6 cards with shimmer animation on load",
+      "Empty state shows when no projects match filter",
+      "Grid is responsive (3/2/1 columns)",
+      "Typecheck passes with no errors",
+      "Tests for projects page render pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003", "US-005"],
+    "screens": ["Projeler---Hikmet-Güleşli"]
+  },
+  {
+    "id": "US-007",
+    "title": "Proje Detay Page",
+    "description": "Build the Proje Detay page (/projects/[slug]) with full-width hero thumbnail (max-height 500px), centered content container (max-width 800px). Sections: project header (title, date, client for freelance), overview (problem statement, solution, impact), tech stack grid (icons + names), gallery carousel (if applicable), challenges & solutions accordion, external links (GitHub repo, Live demo). Sticky sidebar (desktop): table of contents + action buttons. Next/Prev project navigation at bottom. Code blocks: background #0d0d12, border, syntax highlighting with copy button top-right. States: content skeleton with sidebar skeleton on load, 404 with project suggestion on not found.",
+    "acceptanceCriteria": [
+      "Dynamic route [slug] renders correct project data",
+      "Hero thumbnail displays at max-height 500px",
+      "Tech stack renders as grid of icon + name pairs",
+      "Challenges & Solutions accordion uses single type with height animation",
+      "Sidebar is sticky on desktop (position: sticky, top: 80px)",
+      "Next/Prev navigation links work correctly",
+      "Code blocks have #0d0d12 background, border, and copy button",
+      "Loading skeleton shows content + sidebar skeleton",
+      "404 page shows with project suggestion",
+      "Typecheck passes with no errors",
+      "Tests for project detail page render pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003", "US-005", "US-006"],
+    "screens": ["Proje-Detay---Vesta-Dashboard"]
+  },
+  {
+    "id": "US-008",
+    "title": "Blog Listesi Page",
+    "description": "Build the Blog page (/blog) with 'Writing' header + description, search bar (same style as projects), category filter buttons (Tümü, Teknik, Career, Kişisel, Tutorial), articles grid (2-column desktop, 1-column mobile), and featured article full-width card at top (if pinned). ArticleCard: date (muted) + read time, title (bold), excerpt (2 lines), category badges. Card hover: border-primary, bg-background-elevated, transition 200ms. Featured article: full-width card with larger thumbnail and 'Featured' badge. Loading: 4 skeleton cards. Empty: 'Henüz yazı yok' illustration. No results: 'Aramanıza uygun yazı bulunamadı' + clear filters button.",
+    "acceptanceCriteria": [
+      "Featured article renders as full-width card at top when pinned",
+      "ArticleCard shows date, read time, title, excerpt (2 lines), categories",
+      "Card hover effect: border-primary, bg-background-elevated",
+      "Category filter works and shows active state",
+      "Search filters articles correctly",
+      "Grid is 2-column desktop, 1-column mobile",
+      "Skeleton loaders show 4 cards on load",
+      "Empty state shows when no posts exist",
+      "Typecheck passes with no errors",
+      "Tests for blog list page render pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003", "US-005"],
+    "screens": ["Blog---Hikmet-Güleşli"]
+  },
+  {
+    "id": "US-009",
+    "title": "Blog Detay Page",
+    "description": "Build the Blog Detay page (/blog/[slug]) with max-width 720px content area. Header: title (display size 4xl), date, author avatar + name, read time, category badges. Featured image: full-width, max-height 400px, object-cover. Article body: prose styling (custom typography per PRD), h2/h3 with id anchors for TOC, inline code (bg-background-subtle), code blocks (bg-#0d0d12), blockquotes (border-l-4 border-primary), links (text-primary with external link icon). Table of contents: sticky sidebar (desktop), collapsible (mobile) with active section highlighting. Share buttons: Twitter, LinkedIn, Copy link. Footer: tags list with hover effects, author bio card, related articles (2-3 based on category/tags), comments placeholder (giscus integration ready).",
+    "acceptanceCriteria": [
+      "Dynamic route [slug] renders correct blog post content",
+      "Prose typography matches PRD specifications (p: text-lg, h2: text-2xl font-bold text-primary)",
+      "Code blocks have #0d0d12 background, copy button works",
+      "Blockquotes render with border-l-4 border-primary",
+      "TOC sidebar is sticky on desktop with active section highlighting",
+      "TOC collapses to accordion on mobile",
+      "Share buttons work (Twitter, LinkedIn open share URLs, Copy copies link)",
+      "Related articles show 2-3 posts from same category/tags",
+      "Typecheck passes with no errors",
+      "Tests for blog detail page render pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003", "US-005", "US-008"],
+    "screens": ["Blog-Detay---Hikmet-Güleşli"]
+  },
+  {
+    "id": "US-010",
+    "title": "Hakkında (About) Page",
+    "description": "Build the Hakkında page (/about) with profile hero (circular avatar 200px with 4px primary border and glow on hover, gradient text name, title, short bio, availability status toggle), experience timeline (vertical line 2px primary at 0.3 opacity, alternating left/right items on desktop / stacked on mobile, date badge + title + description + company, current item highlighted with primary border, fade-in + slide-up animation on scroll with stagger), skills grid (categories: Frontend, Backend, Database, DevOps, Tools, Soft Skills, each skill with icon + name + proficiency bar bg-background-subtle filled bg-primary, animated on view), currently learning section, and CV download button.",
+    "acceptanceCriteria": [
+      "Avatar renders at 200px with 4px primary border and glow on hover",
+      "Gradient text on name using bg-gradient-to-r from-primary to-accent",
+      "Timeline vertical line renders at 2px primary with 0.3 opacity",
+      "Timeline items alternate left/right on desktop, stack on mobile",
+      "Current experience item has primary border highlight",
+      "Scroll animation triggers fade-in + slide-up with 100ms stagger",
+      "Skills grid renders 6 categories with icon + name + proficiency bar",
+      "Proficiency bar animates from 0 to value when scrolled into view",
+      "CV download button triggers file download",
+      "Typecheck passes with no errors",
+      "Tests for about page render pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003", "US-005"],
+    "screens": ["Hakkında---Hikmet-Güleşli"]
+  },
+  {
+    "id": "US-011",
+    "title": "İletişim (Contact) Page",
+    "description": "Build the İletişim page (/contact) with split layout (form left, info right desktop; single column mobile). Contact form: First Name + Last Name row, Email, Subject, Message (textarea, auto-resize), Send Message button (full-width bg-primary). All inputs: bg-background-elevated, border-border, focus:border-primary with ring. Validation: firstName/lastName (2-50 chars, letters), email (valid format), subject (5-200 chars), message (20-2000 chars). Real-time validation on blur with inline error messages. Submit button loading state (spinner), form disabled during submit. Success: toast notification + form reset + 'Mesajınız iletildi!' message. Info section: email mailto link with icon, location 'Türkiye', timezone (Europe/Istanbul), social links, availability status (green dot + 'Şu an müsaitim' / 'Müsait değilim').",
+    "acceptanceCriteria": [
+      "Form layout: First Name + Last Name side-by-side, rest full-width",
+      "All validation rules work correctly on blur",
+      "Submit button shows spinner during submission",
+      "Form resets and shows success toast on successful submit",
+      "Inline error messages appear below invalid fields",
+      "Info section shows email with mailto: link",
+      "Availability status shows green dot + text",
+      "Split layout on desktop, single column on mobile",
+      "Typecheck passes with no errors",
+      "Tests for contact page render and form validation pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003", "US-005"],
+    "screens": ["İletişim---Hikmet-Güleşli"]
+  },
+  {
+    "id": "US-012",
+    "title": "SEO, Metadata & Structured Data",
+    "description": "Implement the full SEO system: default SEO in layout.tsx (title template '%s | Hikmet Güleşli', meta description, Open Graph, Twitter Card, robots), generateMetadata function for each page with page-specific values, JSON-LD structured data (Person schema on homepage, Article schema on blog posts, Breadcrumb schema on all pages), sitemap.xml generation, robots.txt. Page SEO: blog posts include article schema with publishedTime, author, tags; projects include og:type article with thumbnail image. Canonical URLs for all pages.",
+    "acceptanceCriteria": [
+      "Default metadata renders in layout with correct title template",
+      "Homepage has Person JSON-LD schema",
+      "Blog posts have Article JSON-LD schema with publishedTime and author",
+      "All pages have Breadcrumb JSON-LD schema",
+      "Sitemap includes all static and dynamic routes",
+      "robots.txt allows crawlers and disallows /api/ and /_next/",
+      "Open Graph images point to /og-image.png",
+      "Twitter card is summary_large_image",
+      "Typecheck passes with no errors",
+      "Tests for SEO metadata render pass"
+    ],
+    "depends_on": ["US-001", "US-005", "US-006", "US-007", "US-008", "US-009", "US-010", "US-011"],
+    "screens": []
+  },
+  {
+    "id": "US-013",
+    "title": "404 Error Page & Global Error Boundaries",
+    "description": "Build custom 404 page with: error message 'Sayfa Bulunamadı', illustration, navigation links (Ana Sayfa, Projeler, Blog), and recent posts suggestions. Build global error boundary (error.tsx) with: friendly error message, retry button, report option. Implement not-found.tsx for route-level 404s. Ensure all error pages follow PRD dark theme and design tokens.",
+    "acceptanceCriteria": [
+      "404 page renders with navigation links to main pages",
+      "404 page shows recent posts for suggestions",
+      "Error boundary catches errors and shows retry button",
+      "Error boundary styling matches dark theme",
+      "Typecheck passes with no errors",
+      "Tests for error pages render pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003", "US-005", "US-008"],
+    "screens": []
+  },
+  {
+    "id": "US-014",
+    "title": "Integration Wiring & End-to-End Verification",
+    "description": "Wire all components into their pages, verify all routes are navigable with no dead routes, confirm all interactive elements (buttons, forms, links) trigger real functionality, verify no placeholder text ('Yakında', 'TODO', etc.) remains, verify state transitions work end-to-end (form validation → submit → success toast), verify all pages import and render real components from src/components/, verify Header/Footer appear on all pages, verify responsive breakpoints work at all sizes, remove all orphan/dead code files from previous stories that were superseded by integration wiring. Clean up any duplicate utility files, remove story-specific standalone components that were replaced by unified modules.",
+    "acceptanceCriteria": [
+      "All pages import components from src/components/ (not inline definitions)",
+      "All routes (/, /projects, /projects/[slug], /blog, /blog/[slug], /about, /contact) are navigable",
+      "No placeholder text exists anywhere ('Yakında', 'TODO', 'Game Started', etc.)",
+      "Header renders consistently on all pages with correct active state",
+      "Footer renders consistently on all pages",
+      "Contact form end-to-end: validation → submit → success toast → form reset",
+      "All interactive elements have working handlers (buttons, links, form inputs)",
+      "Responsive layout works at mobile (375px), tablet (768px), desktop (1024px+) breakpoints",
+      "All orphan/dead code files removed (duplicate utilities, story-specific helpers, standalone components replaced by integration)",
+      "Typecheck passes with no errors",
+      "Tests for integration wiring pass"
+    ],
+    "depends_on": ["US-001", "US-002", "US-003", "US-004", "US-005", "US-006", "US-007", "US-008", "US-009", "US-010", "US-011", "US-012", "US-013"],
+    "screens": ["Ana-Sayfa", "Projeler---Hikmet-Güleşli", "Proje-Detay---Vesta-Dashboard", "Blog---Hikmet-Güleşli", "Blog-Detay---Hikmet-Güleşli", "Hakkında---Hikmet-Güleşli", "İletişim---Hikmet-Güleşli"]
+  }
+]
